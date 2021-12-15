@@ -2,11 +2,11 @@
   <div id="app">
     <h1>Tarefas</h1>
     <ProgressionBar />
-    <InputTask />
+    <InputTask :addAtividade="adicionarAtividade" />
     <div class="atividades">
-      <template v-for="n in 10">
-        <task :atividade="'ola'" :key="n" />
-      </template>
+    <template v-for="atividade in lista">
+      <Task :atividade="atividade" :key="atividade"/>
+    </template>
     </div>
   </div>
 </template>
@@ -15,12 +15,26 @@
 import ProgressionBar from "./components/ProgressionBar.vue";
 import InputTask from "./components/InputTask.vue";
 import Task from "./components/Task.vue";
+import Barramento from './barramento.js'
 export default {
   components: {
     ProgressionBar,
     InputTask,
     Task,
   },
+  data(){
+    return{
+      lista:[]
+    }
+  },
+  methods:{
+    adicionarAtividade(atv){
+      if(!atv.isEmpty||ativ!=""){
+        this.lista.push(atv)
+      }
+    }
+  }
+  
 };
 </script>
 

@@ -21,6 +21,7 @@ export default {
       type: String,
       required: true,
     },
+    
   },
   data() {
     return {
@@ -38,7 +39,7 @@ export default {
       } else {
         this.TaskMarcada();
       }
-      console.log("oi");
+      
     },
     TaskMarcada() {
       this.taskConcluida = true;
