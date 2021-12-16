@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <h1>Tarefas</h1>
-    <ProgressionBar />
+    <ProgressionBar :progress="porcentagem" />
     <InputTask :addAtividade="adicionarAtividade" />
     <div class="atividades">
-    <template v-for="atividade in lista">
-      <Task :atividade="atividade" :key="atividade"/>
+    <template v-for="(atividade,index) in lista">
+      <Task :AtualizaPorcentagem="atualizaPorcentagem" :DeleteTask="removerAtividade" :atividade="atividade" :key="index"/>
     </template>
     </div>
   </div>
@@ -24,14 +24,33 @@ export default {
   },
   data(){
     return{
-      lista:[]
+      lista:[],
+      porcentagem:0
     }
   },
   methods:{
     adicionarAtividade(atv){
       if(!atv.isEmpty||ativ!=""){
-        this.lista.push(atv)
+        let atividade = {concluido:false,atividade:atv}
+        this.lista.push(atividade)
+        this.atualizaPorcentagem()
       }
+    },
+    removerAtividade(atv){
+      let index = this.lista.indexOf(atv)
+      this.lista.splice(index,1)
+      this.atualizaPorcentagem()
+    },
+    atualizaPorcentagem(){
+      let QtdAtividades = this.lista.length
+      let QtdAtividadesFeitas=0
+      this.lista.map(e=>{
+        if(e.concluido==true){
+          QtdAtividadesFeitas++
+        }
+      })
+      this.porcentagem = (QtdAtividadesFeitas*100)/QtdAtividades
+      this.porcentagem = parseInt(this.porcentagem,10)
     }
   }
   

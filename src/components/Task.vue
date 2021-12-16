@@ -8,8 +8,8 @@
       class="task-box-content"
       :style="{ backgroundColor: backgroundFrontColor }"
     >
-      <button>X</button>
-      <p :style="{ textDecoration: textDecoration }">{{ atividade }}</p>
+      <button @click="DeleteTask(atividade)">X</button>
+      <p :style="{ textDecoration: textDecoration }">{{ atividade.atividade }}</p>
     </div>
   </div>
 </template>
@@ -18,10 +18,15 @@
 export default {
   props: {
     atividade: {
-      type: String,
+      type: Object,
       required: true,
     },
-    
+    DeleteTask:{
+      type: Function
+    },
+    AtualizaPorcentagem:{
+      type: Function
+    }
   },
   data() {
     return {
@@ -33,18 +38,19 @@ export default {
   },
 
   methods: {
-    TaskClicada: function () {
+    TaskClicada() {
       if (this.taskConcluida) {
         this.TaskDesmarcada();
       } else {
         this.TaskMarcada();
       }
-      
+      this.AtualizaPorcentagem()
     },
     TaskMarcada() {
       this.taskConcluida = true;
-      (this.backgroundBackColor = "rgb(1, 75, 50)"),
-        (this.backgroundFrontColor = "rgb(0, 155, 103)");
+      this.atividade.concluido=true
+      this.backgroundBackColor = "rgb(1, 75, 50)",
+      this.backgroundFrontColor = "rgb(0, 155, 103)";
       this.textDecoration = "line-through";
     },
     TaskDesmarcada() {
@@ -52,7 +58,9 @@ export default {
       this.backgroundBackColor = "rgb(75, 1, 1)";
       this.backgroundFrontColor = "rgb(155, 0, 0)";
       this.textDecoration = "none";
+      this.atividade.concluido=false
     },
+    
   },
 };
 </script>
@@ -91,5 +99,6 @@ button {
   width: 20px;
   border-radius: 10px;
   color: white;
+  cursor: pointer;
 }
 </style>

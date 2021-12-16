@@ -1,10 +1,10 @@
 <template>
     <div>
         <div class="barra">
-            <div class="barra-progresso">
+            <div class="barra-progresso" :style="{width:progress+'%'}">
 
             </div>
-            <span>{{progresso}}%</span>
+            <span>{{progress}}%</span>
         </div>
     </div>
 </template>
@@ -12,11 +12,7 @@
 <script>
 export default {
     props:['progress'],
-    data(){
-        return{
-            progresso:0
-        }
-    }
+    
 }
 </script>
 
@@ -28,10 +24,9 @@ export default {
         border-radius: 10px;
     }
     .barra-progresso{
-        width: 0%;
+        width: 50%;
         height: 100%;
         background-color: rgb(15, 187, 24);
-        position: relative;
         z-index: -1;
         border-radius: 8px;
     }
